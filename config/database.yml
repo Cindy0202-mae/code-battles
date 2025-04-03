@@ -21,7 +21,7 @@ default: &default
 
 development:
   <<: *default
-  database: code_battles_development
+  database: one_db_for_all_development
 
   # The specified database role being used to connect to PostgreSQL.
   # To create additional roles in PostgreSQL see `$ createuser --help`.
@@ -79,6 +79,6 @@ test:
 #
 production:
   <<: *default
-  database: code_battles_production
+  database: one_db_for_all_production
   username: code_battles
   password: <%= ENV["CODE_BATTLES_DATABASE_PASSWORD"] %>

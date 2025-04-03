@@ -10,9 +10,38 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_03_25_132109) do
+ActiveRecord::Schema[7.1].define(version: 2025_03_28_020643) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "code_ba_battles", force: :cascade do |t|
+    t.string "name"
+    t.bigint "code_ba_user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["code_ba_user_id"], name: "index_code_ba_battles_on_code_ba_user_id"
+  end
+
+  create_table "code_ba_challenges", force: :cascade do |t|
+    t.string "title"
+    t.string "description"
+    t.bigint "code_ba_battle_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["code_ba_battle_id"], name: "index_code_ba_challenges_on_code_ba_battle_id"
+  end
+
+  create_table "code_ba_users", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_code_ba_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_code_ba_users_on_reset_password_token", unique: true
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -26,4 +55,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_25_132109) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "code_ba_battles", "code_ba_users"
+  add_foreign_key "code_ba_challenges", "code_ba_battles"
 end
